@@ -69,6 +69,12 @@ reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "I
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t REG_DWORD /d "0" /f
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewShadow" /t REG_DWORD /d "0" /f
 
+rem Open with VS Code
+regedit /s vscode.reg
+
+rem Add Mingw-w64 to Environement Variables
+reg add "HKCU\Environment" /v "Path" /t REG_EXPAND_SZ /d "%USERPROFILE%\Documents\mingw64\bin;" /f
+
 rem Speed up Shutdown
 reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "WaitToKillServiceTimeout" /t REG_SZ /d "1000" /f
 reg add "HKCU\Control Panel\Desktop" /v "WaitToKillAppTimeout" /t REG_SZ /d "1000" /f
@@ -77,11 +83,11 @@ rem Enable Classic Control Panel
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v "AllItemsIconView" /t REG_DWORD /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v "StartupPage" /t REG_DWORD /d "1" /f
 
-rem Restore Classic Context Menu
-reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f
+rem Enable Verbose Mode
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "VerboseStatus" /t REG_DWORD /d "1" /f
 
-rem Enable Compact View
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "UseCompactMode" /t REG_DWORD /d "1" /f
+rem Increase IRQ8 Priority
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "IRQ8Priority" /t REG_DWORD /d "1" /f
 
 rem Disable Startup Delay
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" /v "StartupDelayInMSec" /t REG_DWORD /d "0" /f
@@ -90,31 +96,17 @@ rem Disable Spectre and Meltdown Mitigations
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f
 
+rem Restore Classic Context Menu
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f
+
+rem Enable Compact View
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "UseCompactMode" /t REG_DWORD /d "1" /f
+
 rem Change Taskbar Alignement
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAl" /t REG_DWORD /d "0" /f
 
-rem Increase IRQ8 Priority
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "IRQ8Priority" /t REG_DWORD /d "1" /f
-
-rem Enable Verbose Mode
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "VerboseStatus" /t REG_DWORD /d "1" /f
-
-rem Open with VS Code
-reg add "HKCR\*\shell\VSCode" /ve /t REG_SZ /d "Edit with VS Code" /f
-reg add "HKCR\*\shell\VSCode" /v "Icon" /t REG_SZ /d "C:\Program Files\Microsoft VS Code\Code.exe" /f
-reg add "HKCR\*\shell\VSCode\command" /ve /t REG_SZ /d ""C:\Program Files\Microsoft VS Code\Code.exe" "%1"" /f
-reg add "HKCR\Directory\shell\VSCode" /ve /t REG_SZ /d "Open in VS Code" /f
-reg add "HKCR\Directory\shell\VSCode" /v "Icon" /t REG_SZ /d "C:\Program Files\Microsoft VS Code\Code.exe" /f
-reg add "HKCR\Directory\shell\VSCode\command" /ve /t REG_SZ /d ""C:\Program Files\Microsoft VS Code\Code.exe" "%V"" /f
-reg add "HKCR\Directory\Background\shell\VSCode" /ve /t REG_SZ /d "Open in VS Code" /f
-reg add "HKCR\Directory\Background\shell\VSCode" /v "Icon" /t REG_SZ /d "C:\Program Files\Microsoft VS Code\Code.exe" /f
-reg add "HKCR\Directory\Background\shell\VSCode\command" /ve /t REG_SZ /d ""C:\Program Files\Microsoft VS Code\Code.exe" "%V"" /f
-
-rem Add Mingw-w64 to Environement Variables
-reg add "HKCU\Environment" /v "Path" /t REG_EXPAND_SZ /d "%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;%USERPROFILE%\Documents\mingw64\bin;" /f
-
-rem Enable Hyper-V
-rem dism /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
+rem Change Taskbar Size
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarSi" /t REG_DWORD /d "0" /f
 
 rem Disable Lid Close Action
 powercfg /setdcvalueindex scheme_current sub_buttons lidaction 0
