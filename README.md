@@ -1,6 +1,7 @@
 # Tweaker11
 ## Tweaks
- * Enable Dark Mode & Disable Transparency
+ * Enable Dark Mode
+ * Disable Transparency
  * Disable Shortcut Text
  * Disable System Restore
  * Disable UAC
