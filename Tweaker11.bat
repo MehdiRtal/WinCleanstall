@@ -1,31 +1,9 @@
 @echo off
 
-:: BatchGotAdmin
-:-------------------------------------
-::  --> Check for permissions
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
-
-:: --> If error flag set, we do not have admin.
-if '%errorlevel%' NEQ '0' (
-    echo Requesting administrative privileges...
-    goto UACPrompt
-) else ( goto gotAdmin )
-
-:UACPrompt
-    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
-    echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
-
-    "%temp%\getadmin.vbs"
-    exit /B
-
-:gotAdmin
-    if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
-    pushd "%CD%"
-    CD /D "%~dp0"
-:--------------------------------------
-
-:: Enable Dark Mode & Disable Transparency
+:: Enable Dark Mode
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t REG_DWORD /d "0" /f
+
+:: Disable Transparency
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d "0" /f
 
 :: Disable Shortcut Text
@@ -69,9 +47,6 @@ reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "I
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t RE   G_DWORD /d "0" /f
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewShadow" /t REG_DWORD /d "0" /f
 
-:: Open with VS Code
-regedit /s vscode.reg
-
 :: Speed up Shutdown
 reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "WaitToKillServiceTimeout" /t REG_SZ /d "1000" /f
 reg add "HKCU\Control Panel\Desktop" /v "WaitToKillAppTimeout" /t REG_SZ /d "1000" /f
@@ -108,6 +83,9 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "T
 :: Change Taskbar Size
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarSi" /t REG_DWORD /d "0" /f
 
+:: Disable Bing Search
+reg add "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v "DisableSearchBoxSuggestions" /t REG_DWORD /d "1" /f
+
 :: Disable Lid Close Action
 powercfg /setdcvalueindex scheme_current sub_buttons lidaction 0
 powercfg /setacvalueindex scheme_current sub_buttons lidaction 0
@@ -119,6 +97,9 @@ powercfg -change -standby-timeout-ac 0
 :: Change Monitor Timeout
 powercfg -change -monitor-timeout-dc 1
 powercfg -change -monitor-timeout-ac 1
+
+:: Bypass Execution Policy
+powershell -Command Set-ExecutionPolicy Bypass -Force
 
 :: Compress OS with LZX
 compact /c /a /i /exe:lzx /s "C:\*"
