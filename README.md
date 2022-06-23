@@ -9,7 +9,6 @@ Windows 11 Registry Tweaks.
  * Enable Classic Photo Viewer (Comment out to use)
  * Show Hidden Files & Extensions
  * Disable Visual Effects
- * Open with VS Code
  * Speed up Shutdown
  * Enable Classic Control Panel
  * Enable Verbose Mode
