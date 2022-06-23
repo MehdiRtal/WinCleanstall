@@ -1,6 +1,4 @@
 # Tweaker11
-## Description
-Windows 11 Registry Tweaks.
 ## Tweaks
  * Enable Dark Mode & Disable Transparency
  * Disable Shortcut Text
@@ -20,7 +18,9 @@ Windows 11 Registry Tweaks.
  * Enable Compact View
  * Change Taskbar Alignement
  * Change Taskbar Size
+ * Disable Bing Search
  * Disable Lid Close Action
  * Disable Computer Sleep
  * Change Monitor Timeout
+ * Bypass Execution Policy
  * Compress OS with LZX
