@@ -5,7 +5,7 @@
  * Disable Shortcut Text
  * Disable System Restore
  * Disable UAC
- * Enable Classic Photo Viewer (Comment out to use)
+ * Enable Classic Photo Viewer
  * Show Hidden Files & Extensions
  * Disable Visual Effects
  * Speed up Shutdown
@@ -23,5 +23,5 @@
  * Disable Lid Close Action
  * Disable Computer Sleep
  * Change Monitor Timeout
- * Bypass Execution Policy
+ * Bypass PowerShell Scripts Execution Policy
  * Compress OS with LZX
