@@ -24,4 +24,5 @@
  * Disable Computer Sleep
  * Change Monitor Timeout
  * Bypass PowerShell Scripts Execution Policy
+ * Remove Microsoft Edge
  * Compress OS with LZX
