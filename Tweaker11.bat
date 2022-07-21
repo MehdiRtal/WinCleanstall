@@ -101,6 +101,9 @@ powercfg -change -monitor-timeout-ac 1
 :: Bypass Execution Policy
 powershell -Command Set-ExecutionPolicy Bypass -Force
 
+:: Remove Microsoft Edge
+powershell -Command "iwr -useb https://github.com/mrhaydendp/RemoveEdge/raw/main/RemoveEdge.ps1 | iex"
+
 :: Compress OS with LZX
 compact /c /a /i /exe:lzx /s "C:\*"
 
