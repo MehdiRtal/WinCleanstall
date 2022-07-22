@@ -1,4 +1,4 @@
-# Tweaker11
+# WindowsTweaker
 ## Tweaks
  * Enable Dark Mode
  * Disable Transparency
