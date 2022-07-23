@@ -1,4 +1,4 @@
-# COMING SOON
+# WORK IN PROGRESS!!!
 # WinCleanstall
 ## Installation
 * Download and install [ventoy](https://github.com/ventoy/Ventoy/releases/latest) on your usb.
