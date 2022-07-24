@@ -5,31 +5,37 @@ import requests
 import zipfile
 import json
 
-
+print("\nWelcome to WinCleanstall!")
 confirm = False
 while not confirm:
-    install = False
-    device = "E"
-    secure_boot = False
-    partition_style = "GPT"
+    print("\nDo you want to install or update Ventoy?")
+    install = True if input().lower() == "install" else False
+    print('\nWhat device letter do you want to install Ventoy on? (e.g. "E/F")')
+    device = input()
+    print("\nDo you want to enable secure boot? (y/n)")
+    secure_boot = True if input().lower() == "y" else False
+    print("\nWhat partition style do you want to use? (GPT/MBR) ")
+    partition_style = input().upper()
 
-    windows = "10"
+    print('\nWhat version of Windows do you want to install? (e.g. "10")')
+    windows = input()
     bypass = False
     if windows == "11":
-        bypass = True
-    if bypass == True:
-        bypass = "1"
-    else:
-        bypass = "0"
-        
-    release = "Latest"
-    edition = "Pro"
-    language = "English"
-    arch = "x64"
+        print("\nDo you want to bypass Windows 11 check? (y/n)")
+        bypass = "1" if input().lower() == "y" else "0"
     
-    post_tweaks = True
-    
-    confirm = True
+    print('\nWhat release of Windows do you want to install?  (e.g. "Latest/21H1")')
+    release = input()
+    print('\nWhat edition of Windows do you want to install? (e.g. "Pro/Home")')
+    edition = input()
+    print('\nWhat language do you want to install? (e.g. "Arabic")')
+    language = input()
+    print('\nWhat architecture do you want to install? (e.g. "x64")')
+    arch = input()
+    print("\nDo you want to install post-tweaks? (y/n)")
+    post_tweaks = True if input().lower() == "y" else False
+    print("\nDo you confirm? (y/n)")
+    confirm = True if input().lower() == "y" else False
     
 iso_dir = f"{device}:/ISO/"
 ventoy_dir = f"{device}:/ventoy/"
@@ -127,10 +133,11 @@ def fido():
         os.makedirs(iso_dir)
         wget.download(windows_url, out=iso_dir)
 
-def script():
+def post_script():
     response = requests.get("https://api.github.com/repos/ArtanisInc/Post-Tweaks/releases/latest").json()
     url = response["zipball_url"]
     filename = wget.filename_from_url(url)
+    
     
     if not os.path.exists(scripts_dir + filename):
         print(f"\nInstalling PostTweaks script on your device...")
@@ -147,11 +154,14 @@ def script():
                 zip.extract(file)
         os.rename(zip.namelist()[0], "PostTweaks/")
         os.remove(filename)
-        
+
+def config():  
     if not os.path.exists(ventoy_dir + "script.json", "w"):
         with open(ventoy_dir + "script.json", "w") as f:
             json.dump(ventoy_config, f, indent=4)
     
 ventoy()
 fido()
-script()
+if post_tweaks:
+    post_script()
+config()
