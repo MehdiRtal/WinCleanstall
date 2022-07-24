@@ -16,4 +16,4 @@ Create an automated, clean and custom Windows installation
 
 ## Credits
 * [@ventoy](https://github.com/ventoy) For making a bootable USB
-* [@pbatard](https://github.com/pbatard) For getting Windows ISO download link
+* [@pbatard](https://github.com/pbatard) For getting automatic Windows ISO download links
