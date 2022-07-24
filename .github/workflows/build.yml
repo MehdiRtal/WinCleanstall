@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+    - name: Install dependencies
+      run: |
+        pip install pyinstaller
+        pip install -r requirements.txt
+    - name: Wait for Test
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        checkName: test
+        token: ${{ github.token }}
+    - name: Package with pyinstaller
+      run: pyinstaller ${{ github.event.repository.name }}.spec
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ github.workflow }}
+        path: 'dist/'
+    - name: Delete old workflow runs
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+        token: ${{ github.token }}
+        repository: ${{ github.repository }}
+        delete_workflow_pattern: ${{ github.workflow }}
+        retain_days: 0
+        keep_minimum_runs: 0
