@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags: 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@3
+    - name: Wait for Build
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        checkName: Build
+        token: ${{ github.token }}
+    - name: Push Release
+      uses: marvinpinto/action-automatic-releases@v1
+      with:
+        repo_token: ${{ github.token }}
+        prerelease: false
+        files: 'dist/'
