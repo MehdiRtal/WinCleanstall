@@ -1,4 +1,3 @@
-# WORK IN PROGRESS!!!
 # WinCleanstall
 Create an automated, clean and custom Windows installation
 
